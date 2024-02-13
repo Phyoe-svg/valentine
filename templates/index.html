@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Will You?{% endblock %}</title>
+    <style>
+      * {
+        margin: auto;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      html,
+      body {
+        background-image: url(../static/tulip.jpeg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        background-size: cover;
+        height: 100%;
+        display: flex;
+      }
+
+      .container {
+        width: 70%;
+        height: 70%;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.534);
+      }
+
+      @media screen and (max-width: 600px){
+        html, body{
+            height: 100%;
+        }
+        .container{
+            width: 100%;
+            height: auto;
+            padding: 20px;
+        }
+    }
+
+      .container .image{
+        width: 300px;
+        border: 2px solid white;
+        border-radius: 50px;
+        overflow: hidden;
+        box-shadow: 0 0 100px pink;
+        background-color: white;
+      }
+
+      .image img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .container .requests {
+        width: 50%;
+        display: flex;
+        text-align: center;
+        margin: 20px auto;
+      }
+
+      .requests div {
+        margin: 10px;
+        padding: 20px;
+        color: rgb(118, 34, 34);
+      }
+
+      .requests .accept {
+        background-color: pink;
+        border-radius: 20px;
+      }
+
+      .requests .reject {
+        background-color: red;
+        border-radius: 20px;
+        color: white;
+      }
+
+      .requests div:hover {
+        transition: 0.2s ease-out;
+        transform: scale(1.1);
+      }
+
+      .hapi {
+        /* width: 100%; */
+        height: 100%;
+
+      }
+
+      .hapi h1 {
+        margin: 20px auto;
+        color: rgb(35, 196, 153);
+        font-size: 5em;
+        font-weight: bolder;
+        width: fit-content;
+      }
+
+      .hapi form {
+        width: 50%;
+        height: 400px;
+        text-align: center;
+      }
+
+      form textarea {
+        height: 50%;
+        border: none;
+        border-radius: 30px;
+        padding: 30px;
+      }
+
+      @media screen and (max-width: 600px){
+        .hapi h1{
+            font-size: 1em;
+        }
+
+        .hapi form{
+            width: 100%;
+        }
+
+        form textarea{
+            width: 90%;
+        }
+    }
+
+      input {
+        background-color: rgba(128, 136, 80, 0.503);
+        width: 50%;
+        padding: 20px;
+        border-radius: 30px;
+        border: none;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        margin: 10px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="image">
+        <img src="{{ url_for('static', filename='original.webp') }}" alt="" srcset="" />
+      </div>
+      <div class="requests">
+        <div class="accept" id="yes">Yes</div>
+        <div class="reject" id="no">No</div>
+      </div>
+    </div>
+    <script>
+      const accept = document.getElementById("yes");
+      const reject = document.getElementById("no");
+      const display = document.querySelector(".container");
+
+      accept.addEventListener("click", (e) => {
+        e.preventDefault();
+        display.innerHTML = `<div class="hapi">
+    <h1>Hapi Hapi Hapi, UwU</h1>
+    <form action="/add/wish" method="post">
+        <textarea name="wish" placeholder="Leave a wish for me.."></textarea>
+        <input type="submit" value="Wish!" id="submit">
+    </form>
+</div>`;
+      });
+
+      const words = [
+        "Really?",
+        "Sure?",
+        "Humm, I guess u touch wrong option",
+        "Ohh no plz",
+        "don't T^T",
+        "Pleaseeeeee",
+      ];
+      let word = 0;
+      reject.addEventListener("click", () => {
+        let last = words.length;
+        if (word === last) {
+          word = 0;
+        } else {
+          reject.innerText = words[word];
+          word++;
+        }
+      });
+    </script>
+  </body>
+</html>
